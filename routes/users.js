@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
     console.log('stdout:', stdout);
     console.log('stderr:', stderr);
     const a = stdout.split("\r\n");
-    let output = '<html lang="en"><head>';
+    let output = '<DOCTYPE!html><html lang="en"><head>';
     output += '<link href="stylesheets/style.css" type="text/css" rel="stylesheet />';
     output += "</head>";
     
