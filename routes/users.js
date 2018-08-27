@@ -11,8 +11,10 @@ router.get('/', function(req, res, next) {
     console.log('stdout:', stdout);
     console.log('stderr:', stderr);
     const a = stdout.split("\r\n");
-    let output = '<DOCTYPE!html><html lang="en"><head>';
-    output += '<link href="stylesheets/style.css" type="text/css" rel="stylesheet />';
+    let output = '<!DOCTYPE html><html lang="en"><head>';
+    output += '<link rel="icon" type="image/x-icon" href="/images/myExpressApp.ico">';
+    output += '<link rel="shortcut icon" type="image/x-icon" href="/images/myExpressApp.ico">';
+    output += '<link href="stylesheets/style.css" type="text/css" rel="stylesheet">'; 
     output += "</head>";
     
     output += "<body><ul>";
