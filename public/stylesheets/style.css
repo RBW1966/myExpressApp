@@ -14,3 +14,8 @@ a {
 .output {
   font: 12px "Consolas";
 }
+
+.w3-container a {
+  color: #337ab7;
+  text-decoration: none;
+}
