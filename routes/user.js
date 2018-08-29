@@ -9,7 +9,7 @@ router.get('/', ensureLoggedIn, function(req, res, next) {
     user: req.user ,
     userProfile: JSON.stringify(req.user, null, '  ')
   });
-  console.log(`Hi ${req.user._json.name}`);
+  console.log(`Hi ${req.user.user_id}`);
 });
 
 module.exports = router;

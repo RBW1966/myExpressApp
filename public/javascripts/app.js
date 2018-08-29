@@ -7,5 +7,8 @@ window.addEventListener('load', () => {
 });
 
 function doIt() {
-  console.log("Client side script.")
+  setTimeout(() => {
+    console.log("Client side script.");
+    h1.innerText = "======== TIMER ========";
+  }, 5000);
 }
