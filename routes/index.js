@@ -23,6 +23,7 @@ router.get('/callback',
     failureRedirect: '/failure'
   }),
   function(req, res) {
+    process.env.user_id = req.user.user_id;
     res.redirect(req.session.returnTo || '/');
   }
 );
