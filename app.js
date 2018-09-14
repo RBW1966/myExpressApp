@@ -9,27 +9,10 @@ const dotenv = require('dotenv');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const flash = require('connect-flash');
+const myMongo = require('./mongo.js');
 
-
-// Retrieve
-const MongoClient = require('mongodb').MongoClient;
-
-// Connect to the db
-MongoClient.connect("mongodb://myExpressUser:abc123@ds245347.mlab.com:45347/myexpressapp", { useNewUrlParser: true }, (err, db) => {
-
-  if(err) {
-    return console.dir(err);
-  } else {
-    console.log("Connected!");
-  }
-  db.db('myexpressapp').collection('users').find().toArray()
-  .then(result => {
-    console.log(result);
-  });
-  db.close();
-
-});
-
+const myDB = new myMongo();
+myDB.connect();
 
 dotenv.load();
 
