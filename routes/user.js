@@ -14,6 +14,7 @@ router.get('/', ensureLoggedIn, function(req, res, next) {
     userProfile: JSON.stringify(req.user, null, '  ')
   });
   console.log(`Hi ${req.user.displayName}`);
+  
 });
 
 module.exports = router;

@@ -14,7 +14,7 @@ const myMongo = require('./mongo.js');
 const myDB = new myMongo();
 myDB.connect();
 
-dotenv.load();
+//dotenv.load();
 
 const routes = require('./routes/index');
 const user = require('./routes/user');
