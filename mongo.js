@@ -19,7 +19,6 @@ class myMongo {
     console.log(process.env.MONGODB_URI);
     
     MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, (err, db) => {
-    //MongoClient.connect("mongodb://myExpressUser:abc123@ds245347.mlab.com:45347/myexpressapp"), { useNewUrlParser: true }, (err, db) => {
       if(err) {
         return console.dir(err);
       } else {
