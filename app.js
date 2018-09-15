@@ -49,6 +49,8 @@ passport.deserializeUser(function(user, done) {
 
 const app = express();
 
+app.set("myMongo", myMongo);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
