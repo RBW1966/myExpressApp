@@ -1,6 +1,9 @@
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
+const myMongo = require('../mongo.js');
+
+const myDB = myMongo;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -24,6 +27,7 @@ router.get('/callback',
   }),
   function(req, res) {
     process.env.user_id = req.user.user_id;
+    myDB.getUserById(req.user.user_id);
     res.redirect(req.session.returnTo || '/');
   }
 );

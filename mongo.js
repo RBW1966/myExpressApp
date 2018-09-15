@@ -12,29 +12,33 @@ class myMongo {
         return console.dir(err);
       } else {
         console.log("Connected!");
+        this.db = db;
       }
     });
   }
   
   close() {
-    db.close();
+    this.db.close();
   }
   
-  find(collection, fieldName, value) {
-    db.db('myexpressapp').collection(collection).find({fieldName: value}).toArray()
+  find(collection, fieldName, value, callback) {
+    this.db.db('myexpressapp').collection(collection).find({user_id: value}).toArray()
       .then(result => {
-        console.log(result);
+        callback(result);
       })
       .catch( err =>  {
         console.log(`ERROR: ${err}`);
       });
-    return result;
   }
 
+  logUserInfo(result) {
+    console.log(result);
+  }
   getUserById(id) {
-    myUser = find('users', 'user_id', id);
-    console.log(myUser);
+    console.log(`find users.user_id = ${id}`);
+    this.find('users', 'user_id', id, this.logUserInfo)
   }
 }
 
-module.exports = myMongo
+const robMongo = new myMongo();
+module.exports = robMongo
