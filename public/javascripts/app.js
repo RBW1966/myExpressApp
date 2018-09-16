@@ -1,14 +1,13 @@
-const h1 = document.getElementById("myH1");
-
-h1.innerText = "LOADED!!!!";
-
 window.addEventListener('load', () => {
   doIt();
 });
 
 function doIt() {
-  setTimeout(() => {
-    console.log("Client side script.");
-    h1.innerText = "======== TIMER ========";
-  }, 5000);
+  const socket = io();
+  document.getElementById("form1").addEventListener('submit', function(evt) {
+    const m = document.getElementById("m");
+    evt.preventDefault();
+    socket.emit('chat message',  m.value);
+    m.value = '';
+  });
 }
