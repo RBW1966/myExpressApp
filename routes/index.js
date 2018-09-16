@@ -27,6 +27,7 @@ router.get('/callback',
   }),
   function(req, res) {
     process.env.user_id = req.user.user_id;
+    res.cookie('user_id', process.env.user_id, { maxAge: 900000, httpOnly: true });
     myDB.getUserById(req.user.user_id);
     res.redirect(req.session.returnTo || '/');
   }
