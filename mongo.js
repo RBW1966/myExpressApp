@@ -4,9 +4,6 @@ const dotenv = require('dotenv');
 class myMongo {
 
   connect() {
-    // Read the environment variables
-    // TODO: Read them only once at startup
-    dotenv.load();
     console.log(`MONGODB_URI=${process.env.MONGODB_URI}`);
     
     MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, (err, db) => {

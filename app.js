@@ -5,16 +5,17 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const dotenv = require('dotenv');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const flash = require('connect-flash');
-const myMongo = require('./mongo.js');
 
+// Read environment variables
+const dotenv = require('dotenv');
+dotenv.load()
+
+const myMongo = require('./mongo.js');
 const myDB = myMongo;
 myDB.connect();
-
-//dotenv.load();
 
 const routes = require('./routes/index');
 const user = require('./routes/user');
