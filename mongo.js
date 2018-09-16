@@ -4,14 +4,17 @@ const dotenv = require('dotenv');
 class myMongo {
 
   connect() {
+    // Read the environment variables
+    // TODO: Read them only once at startup
     dotenv.load();
-    console.log(process.env.MONGODB_URI);
+    console.log(`MONGODB_URI=${process.env.MONGODB_URI}`);
     
     MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, (err, db) => {
       if(err) {
         return console.dir(err);
       } else {
-        console.log("Connected!");
+        console.log("MongoClient Connected!");
+        // Save reference to db
         this.db = db;
       }
     });
@@ -34,10 +37,12 @@ class myMongo {
   logUserInfo(result) {
     console.log(result);
   }
+
   getUserById(id) {
     console.log(`find users.user_id = ${id}`);
     this.find('users', 'user_id', id, this.logUserInfo)
   }
+
 }
 
 const robMongo = new myMongo();
