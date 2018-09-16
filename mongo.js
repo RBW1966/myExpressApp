@@ -25,7 +25,7 @@ class myMongo {
   }
   
   find(collection, fieldName, value, callback) {
-    this.db.db('myexpressapp').collection(collection).find({user_id: value}).toArray()
+    this.db.db('myexpressapp').collection(collection).find({[fieldName]: value}).toArray()
       .then(result => {
         callback(result);
       })
