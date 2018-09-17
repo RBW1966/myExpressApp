@@ -211,8 +211,6 @@ const io = require('socket.io')(server);
 // io.set('heartbeat timeout', 4000);
 // io.set('heartbeat interval', 2000);
 
-io.activeUsers ="fred";
-
 io.on('connection', function(socket){
 
   console.log(`User ${socket.id} connected`);
