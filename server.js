@@ -235,6 +235,7 @@ io.on('connection', function(socket){
     console.log(`REGISTER USER: socket.id=${socket.id} user_id=${user_id}`);
     console.log("-----------------------------------------------");
     myMongo.activeUsers[socket.id] = user_id;
+    console.log(myMongo.activeUsers);
   });
 
 });
