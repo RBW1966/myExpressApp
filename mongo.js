@@ -6,6 +6,14 @@ class myMongo {
   constructor() {
     this.activeUsers = {};
   }
+  
+  removeUser(user_id) {
+    delete this.activeUsers[user_id];
+  }
+  
+  addUser(socket_id, user_id) {
+    this.activeUsers[user_id] = socket_id; 
+  }
 
   connect() {
     console.log(`MONGODB_URI=${process.env.MONGODB_URI}`);

@@ -216,6 +216,11 @@ io.on('connection', function(socket){
   console.log(`User ${socket.id} connected`);
 
   socket.on('disconnect', function(){
+    myMongo.removeUser(socket.user_id);
+    for ( let key in myMongo.activeUsers ) {
+      console.log(myMongo.activeUsers[key]);
+    }
+    
     console.log(`User ${socket.id} disconnected`);
   });
   socket.on('chat message', function(msg){
@@ -226,13 +231,15 @@ io.on('connection', function(socket){
         break
       default:
     }
-    console.log(msg);
+    console.log(`ID=${socket.id} USER=${socket.user_id} MSG=${msg}`);
   });
   socket.on('register user', function(user_id) {
+    socket.user_id = user_id;
     console.log("-----------------------------------------------");
     console.log(`REGISTER USER: socket.id=${socket.id} user_id=${user_id}`);
     console.log("-----------------------------------------------");
-    myMongo.activeUsers[socket.id] = user_id;
+    //myMongo.activeUsers[socket.id] = user_id;
+    myMongo.addUser(socket.id, user_id);
     console.log(myMongo.activeUsers);
   });
 
