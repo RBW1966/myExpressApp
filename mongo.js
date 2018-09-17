@@ -3,6 +3,10 @@ const dotenv = require('dotenv');
 
 class myMongo {
 
+  constructor() {
+    this.activeUsers = {};
+  }
+
   connect() {
     console.log(`MONGODB_URI=${process.env.MONGODB_URI}`);
     

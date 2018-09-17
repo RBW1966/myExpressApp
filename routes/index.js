@@ -3,8 +3,6 @@ const passport = require('passport');
 const router = express.Router();
 const myMongo = require('../mongo.js');
 
-const myDB = myMongo;
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index');
@@ -27,8 +25,7 @@ router.get('/callback',
   }),
   function(req, res) {
     console.log(`SESSION-USER-ID=${req.session.passport.user.id}`);
-    process.env.user_id = req.user.user_id;
-    myDB.getUserById(req.user.user_id);
+    myMongo.getUserById(req.user.user_id);
     res.redirect(req.session.returnTo || '/');
   }
 );
