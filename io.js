@@ -1,5 +1,4 @@
 const sio = require('socket.io');
-const server = require('./server.js');
 const Mongo = require('./mongo.js');
 
 const myMongo = new Mongo();

@@ -18,7 +18,7 @@ class myMongo {
   
   addUser(socket_id, user_id) {
     this.activeUsers[user_id] = socket_id;
-    // this.db.db('myexpressapp').collection('users').update({user_id: user_id}, {Name_Last: 'XXXXXXX'})
+    //this.db.db('myexpressapp').collection('users').update({user_id: user_id}, {Name_Last: 'XXXXXXX'})
     //   .then(result => {
     //     console.log(result);
     //   })
@@ -31,7 +31,9 @@ class myMongo {
     console.log(`MONGODB_URI=${mongo_uri}`); 
     MongoClient.connect(mongo_uri, { useNewUrlParser: true }, (err, db) => {
       if(err) {
-        return console.dir(err);
+        console.dir(err);
+        console.log("Failed to connect to mongoDB. Application exiting.");
+        process.exit();
       } else {
         console.log("MongoClient Connected!");
         // Save reference to db
@@ -65,5 +67,4 @@ class myMongo {
 
 }
 
-//const robMongo = new myMongo();
 module.exports = myMongo

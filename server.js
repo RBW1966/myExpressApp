@@ -13,8 +13,10 @@ const flash = require('connect-flash');
 const dotenv = require('dotenv');
 dotenv.load()
 
+// io.js Singleton socket.io object
 const Mongo = require('./mongo.js');
 myMongo = new Mongo();
+
 myMongo.connect(process.env.MONGODB_URI);
 
 const routes = require('./routes/index');
@@ -134,7 +136,8 @@ var debug = require('debug')('myexpressapp:server');
 /**
  * Get port from environment and store in Express.
  */
-var port = normalizePort(process.env.PORT || '80');
+//var port = normalizePort(process.env.PORT || '80');
+var port = normalizePort(process.env.PORT);
 app.set('port', port);
 
 /**
@@ -150,36 +153,29 @@ server.on('listening', onListening);
 /**
  * Normalize a port into a number, string, or false.
  */
-
 function normalizePort(val) {
   var port = parseInt(val, 10);
-
   if (isNaN(port)) {
     // named pipe
     return val;
   }
-
   if (port >= 0) {
     // port number
     return port;
   }
-
   return false;
 }
 
 /**
  * Event listener for HTTP server "error" event.
  */
-
 function onError(error) {
   if (error.syscall !== 'listen') {
     throw error;
   }
-
   var bind = typeof port === 'string'
     ? 'Pipe ' + port
     : 'Port ' + port;
-
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
@@ -194,11 +190,10 @@ function onError(error) {
       throw error;
   }
 }
-// TEST 
+
 /**
  * Event listener for HTTP server "listening" event.
  */
-
 function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string'
@@ -207,53 +202,6 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
-// const io = require('socket.io')(server);
-
-// // io.set('heartbeat timeout', 4000);
-// // io.set('heartbeat interval', 2000);
-
-// io.on('connection', function(socket){
-
-//   console.log(`User ${socket.id} connected`);
-
-//   socket.on('disconnect', function(){
-//     myMongo.removeUser(socket.user_id);
-//     for ( let key in myMongo.activeUsers ) {
-//       console.log(myMongo.activeUsers[key]);
-//     }
-    
-//     console.log(`User ${socket.id} disconnected`);
-//   });
-//   socket.on('chat message', function(msg){
-//     switch (msg) {
-//       case 'term':
-//         socket.emit('terminate');
-//         process.exit();
-//         break;
-//       case 'end':
-//         socket.emit('logout');
-//         break;
-//       default:
-//     }
-//     console.log(`ID=${socket.id} USER=${socket.user_id} MSG=${msg}`);
-//   });
-//   socket.on('register user', function(user_id) {
-//     socket.user_id = user_id;
-//     console.log("-----------------------------------------------");
-//     console.log(`REGISTER USER: socket.id=${socket.id} user_id=${user_id}`);
-//     console.log("-----------------------------------------------");
-//     //myMongo.activeUsers[socket.id] = user_id;
-//     myMongo.addUser(socket.id, user_id);
-//     console.log(myMongo.activeUsers);
-//   });
-
-// });
-
 // io.js Singleton socket.io object
 const robIO = require('./io.js');
 const myIO = new robIO(server);
-//myIO.setServer(server);
-//myIO.setupHandlers();
-
-module.exports = server
-
