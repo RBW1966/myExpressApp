@@ -3,7 +3,7 @@ const MongoClient = require('mongodb').MongoClient;
 let instance = null;
 
 class myMongo {
-
+  
   constructor() {
     if(!instance){
       this.activeUsers = {};
