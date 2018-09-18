@@ -1,14 +1,26 @@
 const sio = require('socket.io');
 const server = require('./server.js');
-const myMongo = require('./mongo.js');
+const Mongo = require('./mongo.js');
+
+const myMongo = new Mongo();
+
+let instance = null;
 
 class myIO {
 
   constructor (server) {
+    if(!instance){
+      this.server = server;
+      this.io = new sio(server);
+      this.setupHandlers();
+      instance = this;
+    }
+    return instance;
+  }
+  setServer(server) {
     this.server = server;
     this.io = new sio(server);
   }
-
   setupHandlers(){
     // io.set('heartbeat timeout', 4000);
     // io.set('heartbeat interval', 2000);
@@ -55,3 +67,4 @@ class myIO {
 //const robIO = new myIO;
 //robIO.setupHandlers();
 module.exports = myIO
+//export default myIO

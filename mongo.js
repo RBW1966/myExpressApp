@@ -1,10 +1,15 @@
 const MongoClient = require('mongodb').MongoClient;
-const dotenv = require('dotenv');
+
+let instance = null;
 
 class myMongo {
 
   constructor() {
-    this.activeUsers = {};
+    if(!instance){
+      this.activeUsers = {};
+      instance = this;
+    }
+    return instance;
   }
   
   removeUser(user_id) {
@@ -12,13 +17,19 @@ class myMongo {
   }
   
   addUser(socket_id, user_id) {
-    this.activeUsers[user_id] = socket_id; 
+    this.activeUsers[user_id] = socket_id;
+    // this.db.db('myexpressapp').collection('users').update({user_id: user_id}, {Name_Last: 'XXXXXXX'})
+    //   .then(result => {
+    //     console.log(result);
+    //   })
+    //   .catch( err =>  {
+    //     console.log(`ERROR: ${err}`);
+    //   });
   }
 
-  connect() {
-    console.log(`MONGODB_URI=${process.env.MONGODB_URI}`);
-    
-    MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, (err, db) => {
+  connect(mongo_uri) {
+    console.log(`MONGODB_URI=${mongo_uri}`); 
+    MongoClient.connect(mongo_uri, { useNewUrlParser: true }, (err, db) => {
       if(err) {
         return console.dir(err);
       } else {
@@ -54,5 +65,5 @@ class myMongo {
 
 }
 
-const robMongo = new myMongo();
-module.exports = robMongo
+//const robMongo = new myMongo();
+module.exports = myMongo

@@ -13,8 +13,9 @@ const flash = require('connect-flash');
 const dotenv = require('dotenv');
 dotenv.load()
 
-const myMongo = require('./mongo.js');
-myMongo.connect();
+const Mongo = require('./mongo.js');
+myMongo = new Mongo();
+myMongo.connect(process.env.MONGODB_URI);
 
 const routes = require('./routes/index');
 const user = require('./routes/user');
@@ -248,8 +249,11 @@ function onListening() {
 
 // });
 
+// io.js Singleton socket.io object
 const robIO = require('./io.js');
 const myIO = new robIO(server);
-myIO.setupHandlers();
+//myIO.setServer(server);
+//myIO.setupHandlers();
+
 module.exports = server
 

@@ -1,8 +1,10 @@
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
-const myMongo = require('../mongo.js');
+const Mongo = require('../mongo.js');
 const dotenv = require('dotenv');
+
+myMongo = new Mongo();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
