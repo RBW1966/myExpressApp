@@ -5,8 +5,13 @@ window.addEventListener('load', () => {
 });
 
 function doTerminate() {
-  location.href ="https://www.w3schools.com";
+  location.href ="https://github.com/RBW1966/myExpressApp";
 }
+
+function doLogout() {
+  location.href = "http://localhost/logout";
+}
+
 function doIt() {
   
   fetch('http://localhost/user')
@@ -17,6 +22,7 @@ function doIt() {
     console.log(myJson);
     socket = io();
     socket.on('terminate', doTerminate);
+    socket.on('logout', doLogout);
     socket.emit('register user', myJson);
     document.getElementById("form1").addEventListener('submit', function(evt) {
       const m = document.getElementById("m");

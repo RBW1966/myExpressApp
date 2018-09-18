@@ -225,10 +225,13 @@ io.on('connection', function(socket){
   });
   socket.on('chat message', function(msg){
     switch (msg) {
-      case 'end':
+      case 'term':
         socket.emit('terminate');
         process.exit();
-        break
+        break;
+      case 'end':
+        socket.emit('logout');
+        break;
       default:
     }
     console.log(`ID=${socket.id} USER=${socket.user_id} MSG=${msg}`);
@@ -245,5 +248,7 @@ io.on('connection', function(socket){
 
 });
 
-module.exports = io
+const robIO = require('./io.js');
+
+module.exports = server
 
