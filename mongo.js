@@ -65,6 +65,11 @@ class myMongo {
     this.find('users', 'user_id', id, this.logUserInfo)
   }
 
+  async Id2UserName(id) {
+    let x = await this.db.db('myexpressapp').collection('users').findOne({user_id: id});
+    const y = `${x.Name_First} ${x.Name_Last}`;
+    return y;
+  }
 }
 
 module.exports = myMongo

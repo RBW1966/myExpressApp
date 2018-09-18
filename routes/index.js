@@ -8,9 +8,17 @@ myMongo = new Mongo();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
+  if (typeof req.user == "undefined") {
+    res.render('index');
+  } else {
+    doIt(req, res);
+  }
 });
 
+async function doIt(req, res) {
+  const user_name =  await myMongo.Id2UserName(req.user.user_id);
+  res.render('index', {user: user_name});
+}
 router.get('/login', passport.authenticate('auth0', {
   scope: 'openid email profile'}),
   function(req, res) {

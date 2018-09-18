@@ -27,7 +27,7 @@ class myIO {
     this.io.on('connection', function(socket){
 
       console.log(`User ${socket.id} connected`);
-
+      
       socket.on('disconnect', function(){
         myMongo.removeUser(socket.user_id);
         for ( let key in myMongo.activeUsers ) {
@@ -43,6 +43,9 @@ class myIO {
             break;
           case 'end':
             socket.emit('logout');
+            break;
+          case 'recon':
+            socket.emit('recon');
             break;
           default:
         }
