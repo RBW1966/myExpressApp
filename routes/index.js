@@ -2,7 +2,6 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 const Mongo = require('../mongo.js');
-const dotenv = require('dotenv');
 
 myMongo = new Mongo();
 
@@ -27,7 +26,6 @@ router.get('/login', passport.authenticate('auth0', {
 
 router.get('/logout', function(req, res) {
   req.logout();
-  //res.redirect(`https://${process.env.AUTH0_DOMAIN}/v2/logout?returnTo=http%3A%2F%2Flocalhost&client_id=${process.env.AUTH0_CLIENT_ID}`);
   res.redirect('http://localhost');
 });
 
