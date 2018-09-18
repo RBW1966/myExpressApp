@@ -18,7 +18,7 @@ class myMongo {
   
   addUser(socket_id, user_id) {
     this.activeUsers[user_id] = socket_id;
-    //this.db.db('myexpressapp').collection('users').update({user_id: user_id}, {Name_Last: 'XXXXXXX'})
+    //this.db.db('myexpressapp').collection('users').update( $set: {user_id: user_id}, {Name_Last: 'XXXXXXX'})
     //   .then(result => {
     //     console.log(result);
     //   })
