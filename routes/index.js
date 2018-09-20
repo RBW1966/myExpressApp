@@ -26,7 +26,7 @@ router.get('/login', passport.authenticate('auth0', {
 
 router.get('/logout', function(req, res) {
   req.logout();
-  res.redirect('http://localhost');
+  res.redirect('/');
 });
 
 router.get('/callback',
@@ -34,8 +34,17 @@ router.get('/callback',
     failureRedirect: '/failure'
   }),
   function(req, res) {
+    // Successful login
+    // auth0 stored the user id in request.session.passport
     console.log(`SESSION-USER-ID=${req.session.passport.user.id}`);
     myMongo.getUserById(req.user.user_id);
+    let options = {
+      maxAge: 1000 * 60 * 15, // would expire after 15 minutes
+      httpOnly: false, // The cookie only accessible by the web server
+      signed: false // Indicates if the cookie should be signed
+    }
+    // Set cookie
+    res.cookie('USER_ID', req.user.user_id, options) // options is optional
     res.redirect(req.session.returnTo || '/');
   }
 );

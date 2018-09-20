@@ -67,8 +67,15 @@ class myMongo {
 
   async Id2UserName(id) {
     let x = await this.db.db('myexpressapp').collection('users').findOne({user_id: id});
-    const y = `${x.Name_First} ${x.Name_Last}`;
-    return y;
+    
+    try {
+      const y = `${x.Name_First} ${x.Name_Last}`;
+      return y;
+    }
+    catch(err) {
+      console.log(`Id2UserName ERROR: ${err}`);
+      return 'USER PROFILE NOT FOUND';
+    }
   }
 }
 

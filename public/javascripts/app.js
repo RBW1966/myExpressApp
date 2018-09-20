@@ -28,25 +28,19 @@ function disableKeyPressing(e) {
         e.keyCode = 0;
         return false;
       }
-
 }
 
 function doDisconnect() {
   console.log('doDisconnect');
   socket.open();
-
-  fetch('http://localhost/user')
-  .then( response => {
-    return response.text();
-  })
-  .then( myJson => {
-    socket.emit('register user', myJson);
-  })
+  console.log(getCookie('USER_ID'));
+  let myID = getCookie("USER_ID");
+  socket.emit('register user', myID);
 }
 
 function doLogout() {
   console.log('doLogout');
-  location.href = "http://localhost/logout";
+  location.href = "/logout";
 }
 function doRecon() {
   console.log('doRecon');
@@ -59,23 +53,21 @@ function doTerminate() {
 
 
 function doIt() {
-  fetch('http://localhost/user')
-  .then(function(response) {
-    return response.text();
-  })
-  .then(function(myJson) {
-    console.log(myJson);
+    let myID = getCookie("USER_ID");
+    console.log(`myID=${myID}`);
     socket = io();
     socket.on('terminate', doTerminate);
     socket.on('logout', doLogout);
     socket.on('recon', doRecon);
     socket.on('disconnect', doDisconnect);
-    socket.emit('register user', myJson);
+    socket.emit('register user', myID);
     document.getElementById("form1").addEventListener('submit', function(evt) {
       const m = document.getElementById("m");
       evt.preventDefault();
-      socket.emit('chat message', m.value);
-      m.value = '';    
+      if (m.value.length) {
+        socket.emit('chat message', m.value);
+        m.value = '';
+      }
     });
     document.addEventListener('keydown', (e) => {
       // F5 is pressed
@@ -100,5 +92,20 @@ function doIt() {
           console.log('Ctrl+R was ignored.');
       }
     });
-  })
+//  })
+}
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+      }
+  }
+  return "";
 }
