@@ -20,6 +20,7 @@ class myIO {
     this.server = server;
     this.io = new sio(server);
   }
+
   setupHandlers(){
     // io.set('heartbeat timeout', 4000);
     // io.set('heartbeat interval', 2000);
@@ -48,8 +49,9 @@ class myIO {
             socket.emit('recon');
             break;
           default:
+            console.log(`ID=${socket.id} USER=${socket.user_id} MSG=${msg}`);
+            socket.broadcast.emit('chat', msg);
         }
-        console.log(`ID=${socket.id} USER=${socket.user_id} MSG=${msg}`);
       });
       socket.on('register user', function(user_id) {
         socket.user_id = user_id;
