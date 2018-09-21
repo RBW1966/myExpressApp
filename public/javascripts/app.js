@@ -5,7 +5,6 @@ let terminated = false;
 window.addEventListener('load', () => {
   doIt();
 });
-
 // Disable key press
 function disableKeyPressing(e) {
       // keycode for F5 function
@@ -58,6 +57,7 @@ function doIncomingChatMessage(message) {
   const newItem = document.createElement("li");
   newItem.appendChild(document.createTextNode(message));
   messages.appendChild(newItem);
+  messages.scrollTop = messages.scrollHeight - messages.clientHeight;
 }
 function doIt() {
   let myID = getCookie("USER_ID");
