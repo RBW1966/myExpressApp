@@ -30,23 +30,15 @@ function disableKeyPressing(e) {
         return false;
       }
 }
-
 function doDisconnect() {
   if (terminated) return;
   console.log('doDisconnect');
   alert('Lost connection to myExpressApp.');
   location.href ="https://github.com/RBW1966/myExpressApp";
-  //document.getElementById('mainContent').style.display = 'none';
-  //console.log('doDisconnect');
-  //await setTimeout(document.getElementById('mainContent').style.display = 'block', 5000);
-  //socket.open();
-  //console.log(getCookie('USER_ID'));
-  //let myID = getCookie("USER_ID");
-  //socket.emit('register user', myID);
 }
-
 function doLogout() {
   //alert('You were logged off by the administrator.');
+  terminated = true;
   console.log('doLogout');
   location.href = "/logout";
 }
@@ -62,6 +54,10 @@ function doTerminate() {
 }
 function doIncomingChatMessage(message) {
   console.log(`${message}`);
+  const messages = document.getElementById("messages");
+  const newItem = document.createElement("li");
+  newItem.appendChild(document.createTextNode(message));
+  messages.appendChild(newItem);
 }
 function doIt() {
   let myID = getCookie("USER_ID");
@@ -101,7 +97,7 @@ function doIt() {
     // Ctrl+R
     if (e.ctrlKey && (e.which === 82) ) {
         disableKeyPressing(e);
-        console.log('Ctrl+R was ignored.');
+       console.log('Ctrl+R was ignored.');
     }
   });
 }
