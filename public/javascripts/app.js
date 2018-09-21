@@ -1,5 +1,6 @@
 let socket = null;
 let user_id = null;
+let terminated = false;
 
 window.addEventListener('load', () => {
   doIt();
@@ -31,6 +32,7 @@ function disableKeyPressing(e) {
 }
 
 function doDisconnect() {
+  if (terminated) return;
   console.log('doDisconnect');
   alert('Lost connection to myExpressApp.');
   location.href ="https://github.com/RBW1966/myExpressApp";
@@ -53,6 +55,7 @@ function doRecon() {
   socket.close();
 }
 function doTerminate() {
+  terminated = true;
   console.log('doTerminate');
   alert('myExpressApp is offline.');
   location.href ="https://github.com/RBW1966/myExpressApp";
