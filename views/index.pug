@@ -3,10 +3,11 @@ extends layout
 block content
   .w3-container
     if loggedIn
-      h4 You are logged in #{user}!
-      <form id="form1" action="">
-      <input id="m" autocomplete="off" placeholder="Enter text" /><button>Send</button>
-      </form>
+      .main
+        h4 You are logged in #{user}!
+        <form id="form1" action="">
+        <input id="m" autocomplete="off" placeholder="Enter text" /><button>Send</button>
+        </form>
       <script src="/socket.io/socket.io.js"></script>
       <script src="/javascripts/app.js"></script>
     else

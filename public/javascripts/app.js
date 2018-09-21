@@ -32,13 +32,19 @@ function disableKeyPressing(e) {
 
 function doDisconnect() {
   console.log('doDisconnect');
-  socket.open();
-  console.log(getCookie('USER_ID'));
-  let myID = getCookie("USER_ID");
-  socket.emit('register user', myID);
+  alert('Lost connection to myExpressApp.');
+  location.href ="https://github.com/RBW1966/myExpressApp";
+  //document.getElementById('mainContent').style.display = 'none';
+  //console.log('doDisconnect');
+  //await setTimeout(document.getElementById('mainContent').style.display = 'block', 5000);
+  //socket.open();
+  //console.log(getCookie('USER_ID'));
+  //let myID = getCookie("USER_ID");
+  //socket.emit('register user', myID);
 }
 
 function doLogout() {
+  //alert('You were logged off by the administrator.');
   console.log('doLogout');
   location.href = "/logout";
 }
@@ -48,6 +54,7 @@ function doRecon() {
 }
 function doTerminate() {
   console.log('doTerminate');
+  alert('myExpressApp is offline.');
   location.href ="https://github.com/RBW1966/myExpressApp";
 }
 function doIncomingChatMessage(message) {

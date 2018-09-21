@@ -16,12 +16,12 @@ dotenv.load()
 // io.js Singleton socket.io object
 const Mongo = require('./mongo.js');
 myMongo = new Mongo();
-
 myMongo.connect(process.env.MONGODB_URI);
 
 const routes = require('./routes/index');
-const user = require('./routes/user');
+//const user = require('./routes/user');
 
+//AUTHENTICATION SECTION ------------------------------------------------------
 // This will configure Passport to use Auth0
 const strategy = new Auth0Strategy(
   {
@@ -37,17 +37,15 @@ const strategy = new Auth0Strategy(
     return done(null, profile);
   }
 );
-
 passport.use(strategy);
-
 // you can use this section to keep a smaller payload
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
-
 passport.deserializeUser(function(user, done) {
   done(null, user);
 });
+// ----------------------------------------------------------------------------
 
 const app = express();
 
@@ -96,7 +94,7 @@ app.use(function(req, res, next) {
 });
 
 app.use('/', routes);
-app.use('/user', user);
+//app.use('/user', user);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

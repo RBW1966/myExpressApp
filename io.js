@@ -16,6 +16,11 @@ class myIO {
     }
     return instance;
   }
+
+  broadcastChatMessage(msg) {
+    this.io.emit('chat', msg);
+  }
+
   setServer(server) {
     this.server = server;
     this.io = new sio(server);
@@ -25,32 +30,32 @@ class myIO {
     // io.set('heartbeat timeout', 4000);
     // io.set('heartbeat interval', 2000);
 
-    this.io.on('connection', function(socket){
+    this.io.on('connection', socket => {
 
       console.log(`User ${socket.id} connected`);
 
-      socket.on('disconnect', function(){
+      socket.on('disconnect', () => {
         myMongo.removeUser(socket.user_id);
         for ( let key in myMongo.activeUsers ) {
           console.log(myMongo.activeUsers[key]);
         }
         console.log(`User ${socket.id} disconnected`);
       });
-      socket.on('chat message', function(msg){
+      socket.on('chat message', msg => {
         switch (msg) {
           case 'term':
-            socket.emit('terminate');
+            this.io.emit('terminate');
             process.exit();
             break;
           case 'end':
-            socket.emit('logout');
+            this.io.emit('logout');
             break;
           case 'recon':
             socket.emit('recon');
             break;
           default:
             console.log(`ID=${socket.id} USER=${socket.user_id} MSG=${msg}`);
-            socket.broadcast.emit('chat', msg);
+            this.io.emit('chat', msg);
         }
       });
       socket.on('register user', function(user_id) {
@@ -60,7 +65,7 @@ class myIO {
         console.log("-----------------------------------------------");
         //myMongo.activeUsers[socket.id] = user_id;
         myMongo.addUser(socket.id, user_id);
-        console.log(myMongo.activeUsers);
+        console.log(`Active Users: ${myMongo.activeUsers}`);
       });
     });
   }
