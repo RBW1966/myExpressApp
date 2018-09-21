@@ -41,7 +41,7 @@ class myIO {
         }
         console.log(`User ${socket.id} disconnected`);
       });
-      socket.on('chat message', msg => {
+      socket.on('chat message', async msg => {
         switch (msg) {
           case 'term':
             this.io.emit('terminate');
@@ -55,7 +55,9 @@ class myIO {
             break;
           default:
             console.log(`ID=${socket.id} USER=${socket.user_id} MSG=${msg}`);
-            this.io.emit('chat', msg);
+            const user_name =  await myMongo.Id2UserName(socket.user_id);
+            const myUser = {"sender": user_name, "msg": msg}
+            this.io.emit('chat', JSON.stringify(myUser));
         }
       });
       socket.on('register user', function(user_id) {

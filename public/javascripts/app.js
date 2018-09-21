@@ -52,10 +52,13 @@ function doTerminate() {
   location.href ="https://github.com/RBW1966/myExpressApp";
 }
 function doIncomingChatMessage(message) {
-  console.log(`${message}`);
+  var msg = JSON.parse(message);
+  var msgString = `${msg.sender}: ${msg.msg}`
+  console.log(msgString);
+
   const messages = document.getElementById("messages");
   const newItem = document.createElement("li");
-  newItem.appendChild(document.createTextNode(message));
+  newItem.appendChild(document.createTextNode(msgString));
   messages.appendChild(newItem);
   messages.scrollTop = messages.scrollHeight - messages.clientHeight;
 }
