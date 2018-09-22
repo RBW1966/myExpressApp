@@ -25,12 +25,20 @@ class myMongo {
     delete this.activeUsers[user_id];
   }
   
-  addUser(socket_id, user_id) {
+  // addUser(socket_id, user_id) {
+  //   this.activeUsers[user_id] = socket_id;
+  //   this.find('users','user_id', user_id, (result) => {
+  //     console.log(result[0]);
+  //     this.activeUsers[user_id] = new User(socket_id, user_id, result[0]);
+  //   });
+  // }
+
+ async addUser(socket_id, user_id) {
     this.activeUsers[user_id] = socket_id;
-    this.find('users','user_id', user_id, (result) => {
-      console.log(result[0]);
-      this.activeUsers[user_id] = new User(socket_id, user_id, result[0]);
-    });
+    let result = await this.find('users','user_id', user_id);
+    //const user = JSON.parse(result);
+    console.log(result);
+    this.activeUsers[user_id] = new User(socket_id, user_id, result);
   }
 
   connect(mongo_uri) {
@@ -52,14 +60,19 @@ class myMongo {
     this.db.close();
   }
   
-  find(collection, fieldName, value, callback) {
-    this.db.db('myexpressapp').collection(collection).find({[fieldName]: value}).toArray()
-      .then(result => {
-        callback(result);
-      })
-      .catch( err =>  {
-        console.log(`ERROR: ${err}`);
-      });
+  // find(collection, fieldName, value, callback) {
+  //   this.db.db('myexpressapp').collection(collection).find({[fieldName]: value}).toArray()
+  //     .then(result => {
+  //       callback(result);
+  //     })
+  //     .catch( err =>  {
+  //       console.log(`ERROR: ${err}`);
+  //     });
+  // }
+
+  async find(collection, fieldName, value) {
+    let result = await this.db.db('myexpressapp').collection(collection).findOne({[fieldName]: value});
+    return result;
   }
 
   async Id2UserName(id) {

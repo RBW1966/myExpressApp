@@ -52,14 +52,20 @@ function doTerminate() {
   location.href ="https://github.com/RBW1966/myExpressApp";
 }
 function doIncomingChatMessage(message) {
+  // Parse the JSON message argument
   var msg = JSON.parse(message);
+  // We will display SENDER: MESSAGE
   var msgString = `${msg.sender}: ${msg.msg}`
-  console.log(msgString);
-
+  console.log(`INCOMING MESSAGE-${msgString}`);
+  // Get the Messages <ul> element
   const messages = document.getElementById("messages");
+  // Create the new <li> element
   const newItem = document.createElement("li");
+  // Set the <li> inner text
   newItem.appendChild(document.createTextNode(msgString));
+  // Append the new <li> to the <ul>
   messages.appendChild(newItem);
+  // Scroll to make the new bottom row visible
   messages.scrollTop = messages.scrollHeight - messages.clientHeight;
 }
 function doIt() {
