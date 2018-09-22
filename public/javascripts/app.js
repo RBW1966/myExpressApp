@@ -76,6 +76,8 @@ function doIt() {
     const m = document.getElementById("m");
     evt.preventDefault();
     if (m.value.length) {
+      m.placeholder = '';
+      setTimeout( () => { document.getElementById("m").placeholder = 'Type a message...' }, 5000);
       socket.emit('chat message', m.value);
       m.value = '';
     }
