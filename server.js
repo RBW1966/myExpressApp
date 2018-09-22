@@ -13,11 +13,16 @@ const flash = require('connect-flash');
 const dotenv = require('dotenv');
 dotenv.load()
 
-// io.js Singleton socket.io object
+// shared mongodb instance
 const Mongo = require('./mongo.js');
 myMongo = new Mongo();
+// connect to the database
 myMongo.connect(process.env.MONGODB_URI);
+// TODO: Exit app if unable to connect to the database!
 
+/*
+*
+*/
 const routes = require('./routes/index');
 //const user = require('./routes/user');
 
@@ -163,7 +168,6 @@ function normalizePort(val) {
   }
   return false;
 }
-
 /**
  * Event listener for HTTP server "error" event.
  */
@@ -188,7 +192,6 @@ function onError(error) {
       throw error;
   }
 }
-
 /**
  * Event listener for HTTP server "listening" event.
  */
@@ -199,7 +202,8 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
-
-// io.js Singleton socket.io object
+/**
+* Start the socket.io instance
+*/
 const robIO = require('./io.js');
 const myIO = new robIO(server);

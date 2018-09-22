@@ -31,13 +31,6 @@ class myMongo {
       console.log(result[0]);
       this.activeUsers[user_id] = new User(socket_id, user_id, result[0]);
     });
-    //this.db.db('myexpressapp').collection('users').update( $set: {user_id: user_id}, {Name_Last: 'XXXXXXX'})
-    //   .then(result => {
-    //     console.log(result);
-    //   })
-    //   .catch( err =>  {
-    //     console.log(`ERROR: ${err}`);
-    //   });
   }
 
   connect(mongo_uri) {
@@ -69,18 +62,8 @@ class myMongo {
       });
   }
 
-  // logUserInfo(result) {
-  //   console.log(result);
-  // }
-
-  // getUserById(id) {
-  //   console.log(`find users.user_id = ${id}`);
-  //   this.find('users', 'user_id', id, this.logUserInfo)
-  // }
-
   async Id2UserName(id) {
     let x = await this.db.db('myexpressapp').collection('users').findOne({user_id: id});
-    
     try {
       const y = `${x.Name_First} ${x.Name_Last}`;
       return y;
