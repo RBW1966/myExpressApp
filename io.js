@@ -42,13 +42,28 @@ class myIO {
         console.log(`User ${socket.id} disconnected`);
       });
       socket.on('chat message', async msg => {
-        switch (msg) {
+        let p = msg.indexOf(" ");
+        let cmd = "";
+        let rest = "";
+        if (p > 0) {
+          cmd = msg.substring(0, p);
+          rest = msg.substring(p + 1);
+        } else {
+          cmd = msg;
+        }
+        console.log(`${cmd} - ${rest}`);
+        switch (cmd) {
           case 'term':
             this.io.emit('terminate');
             process.exit();
             break;
           case 'end':
-            this.io.emit('logout');
+            if (rest.length > 0) {
+              const theSocketID = myMongo.activeUsers[rest].socket_id;
+              this.io.to(theSocketID).emit('logout');
+            } else {
+              this.io.emit('logout');
+            }
             break;
           case 'recon':
             socket.emit('recon');
@@ -71,7 +86,6 @@ class myIO {
       });
     });
   }
-
 }
 
 module.exports = myIO

@@ -33,7 +33,8 @@ function doDisconnect() {
   if (terminated) return;
   console.log('doDisconnect');
   alert('Lost connection to myExpressApp.');
-  location.href ="https://github.com/RBW1966/myExpressApp";
+  socket.open();
+  //location.href ="https://github.com/RBW1966/myExpressApp";
 }
 function doLogout() {
   //alert('You were logged off by the administrator.');
@@ -68,16 +69,20 @@ function doIncomingChatMessage(message) {
   // Scroll to make the new bottom row visible
   messages.scrollTop = messages.scrollHeight - messages.clientHeight;
 }
+function doConnect() {
+  socket.emit('register user', user_id);
+}
 function doIt() {
-  let myID = getCookie("USER_ID");
-  console.log(`myID=${myID}`);
+  user_id = getCookie("USER_ID");
+  console.log(`myID=${user_id}`);
   socket = io();
   socket.on('terminate', doTerminate);
   socket.on('logout', doLogout);
   socket.on('recon', doRecon);
   socket.on('disconnect', doDisconnect);
   socket.on('chat', doIncomingChatMessage)
-  socket.emit('register user', myID);
+  socket.on('connect', doConnect);
+  socket.emit('register user', user_id);
   document.getElementById("form1").addEventListener('submit', function(evt) {
     const m = document.getElementById("m");
     evt.preventDefault();
