@@ -1,8 +1,8 @@
-const express = require('express');
-const passport = require('passport');
-const router = express.Router();
-const Mongo = require('../mongo.js');
-const myMongo = new Mongo();
+const eexpress = require('express');
+const epassport = require('passport');
+const router = eexpress.Router();
+const eMongo = require('../mongo.js');
+const myeMongo = new eMongo();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -14,10 +14,10 @@ router.get('/', function(req, res, next) {
 });
 
 async function doIt(req, res) {
-  const user_name =  await myMongo.Id2UserName(req.user.user_id);
+  const user_name =  await myeMongo.Id2UserName(req.user.user_id);
   res.render('index', {user: user_name});
 }
-router.get('/login', passport.authenticate('auth0', {
+router.get('/login', epassport.authenticate('auth0', {
   scope: 'openid email profile'}),
   function(req, res) {
     res.redirect("/");
@@ -29,7 +29,7 @@ router.get('/logout', function(req, res) {
 });
 
 router.get('/callback',
-  passport.authenticate('auth0', {
+  epassport.authenticate('auth0', {
     failureRedirect: '/failure'
   }),
   function(req, res) {

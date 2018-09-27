@@ -5,3 +5,4 @@ io.js
 server.js
 mongo.js
 routes/index.js
+public/javascripts/app.js

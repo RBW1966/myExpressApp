@@ -1,9 +1,10 @@
 let socket = null;
 let user_id = null;
 let terminated = false;
+//const io = require('socket.io-client');
 
 window.addEventListener('load', () => {
-  doIt();
+  adoIt();
 });
 // Disable key press
 function disableKeyPressing(e) {
@@ -72,7 +73,7 @@ function doIncomingChatMessage(message) {
 function doConnect() {
   socket.emit('register user', user_id);
 }
-function doIt() {
+function adoIt() {
   user_id = getCookie("USER_ID");
   console.log(`myID=${user_id}`);
   socket = io();
@@ -84,11 +85,14 @@ function doIt() {
   socket.on('connect', doConnect);
   socket.emit('register user', user_id);
   document.getElementById("form1").addEventListener('submit', function(evt) {
-    const m = document.getElementById("m");
+    const m = <HTMLInputElement>document.getElementById("m");
     evt.preventDefault();
     if (m.value.length) {
       m.placeholder = '';
-      setTimeout( () => { document.getElementById("m").placeholder = 'Type a message...' }, 5000);
+      setTimeout( () => {
+        const m2 = <HTMLInputElement>document.getElementById("m");
+         m2.placeholder = 'Type a message...';
+      }, 5000);
       socket.emit('chat message', m.value);
       m.value = '';
     }
@@ -101,8 +105,8 @@ function doIt() {
     }
     // Backspace
     if (e.keyCode == 8) {
-      console.log(e.target.id);
-      switch (e.target.id) {
+      console.log((<HTMLInputElement>e.target).id);
+      switch ((<HTMLInputElement>e.target).id) {
         case "m":
           break;
         default:
