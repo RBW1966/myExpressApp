@@ -24,14 +24,14 @@ class myIO {
   setupHandlers(): void {
     // io.set('heartbeat timeout', 4000);
     // io.set('heartbeat interval', 2000);
+    setInterval(() => {
+      const d = new Date();
+      this.broadcastChatMessage(d.toLocaleString());
+    }, 10000);
 
     (this as any).io.on('connection', socket => {
 
       console.log(`User ${socket.id} connected`);
-      setInterval(socket => {
-        const d = new Date();
-        this.broadcastChatMessage(d.toLocaleString());
-      }, 10000);
       socket.on('disconnect', () => {
         disMongo.removeUser(socket.user_id);
         for ( let key in disMongo.activeUsers ) {
