@@ -18,22 +18,20 @@ class myIO {
   }
 
   broadcastChatMessage(msg) {
-    (this as any).io.emit('chat', msg);
+    const myMessage = {"sender": "System", "msg": msg};
+    (this as any).io.emit('chat', JSON.stringify(myMessage));
   }
-
-  setServer(server) {
-    (this as any).server = server;
-    (this as any).io = new sio(server);
-  }
-
-  setupHandlers(){
+  setupHandlers(): void {
     // io.set('heartbeat timeout', 4000);
     // io.set('heartbeat interval', 2000);
 
     (this as any).io.on('connection', socket => {
 
       console.log(`User ${socket.id} connected`);
-
+      setInterval(socket => {
+        const d = new Date();
+        this.broadcastChatMessage(d.toLocaleString());
+      }, 10000);
       socket.on('disconnect', () => {
         disMongo.removeUser(socket.user_id);
         for ( let key in disMongo.activeUsers ) {

@@ -1,7 +1,17 @@
 let socket = null;
 let user_id = null;
 let terminated = false;
-//const io = require('socket.io-client');
+let timer;
+
+let timeout = (function () {
+  return function() {
+    window.clearTimeout(timer);
+    timer = window.setTimeout( () => {
+      const m2 = <HTMLInputElement>document.getElementById("m");
+      m2.placeholder = 'Type a message...';
+    }, 5000);
+  }
+})();
 
 window.addEventListener('load', () => {
   adoIt();
@@ -35,10 +45,8 @@ function doDisconnect() {
   console.log('doDisconnect');
   alert('Lost connection to myExpressApp.');
   socket.open();
-  //location.href ="https://github.com/RBW1966/myExpressApp";
 }
 function doLogout() {
-  //alert('You were logged off by the administrator.');
   terminated = true;
   console.log('doLogout');
   location.href = "/logout";
@@ -89,10 +97,7 @@ function adoIt() {
     evt.preventDefault();
     if (m.value.length) {
       m.placeholder = '';
-      setTimeout( () => {
-        const m2 = <HTMLInputElement>document.getElementById("m");
-         m2.placeholder = 'Type a message...';
-      }, 5000);
+      let x = timeout();
       socket.emit('chat message', m.value);
       m.value = '';
     }
@@ -121,6 +126,7 @@ function adoIt() {
     }
   });
 }
+
 function getCookie(cname) {
   var name = cname + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
