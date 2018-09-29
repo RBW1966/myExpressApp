@@ -1,4 +1,4 @@
-const express = require ('express');
+const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
@@ -135,14 +135,12 @@ app.use(function(err, req, res, next) {
 //module.exports = app;
 
 var debug = require('debug')('myexpressapp:server');
-
 /**
  * Get port from environment and store in Express.
  */
 //var port = normalizePort(process.env.PORT || '80');
-var port = normalizePort(process.env.PORT);
+const port = normalizePort(process.env.PORT);
 app.set('port', port);
-
 /**
  * Create HTTP server.
  */

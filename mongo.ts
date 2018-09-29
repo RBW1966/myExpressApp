@@ -12,7 +12,6 @@ class User {
   }
 }
 class myMongo {
-  
   constructor() {
     if(!instance){
       (this as any).activeUsers = {};
@@ -20,19 +19,9 @@ class myMongo {
     }
     return instance;
   }
-
   removeUser(user_id) {
     delete (this as any).activeUsers[user_id];
   }
-  
-  // addUser(socket_id, user_id) {
-  //   this.activeUsers[user_id] = socket_id;
-  //   this.find('users','user_id', user_id, (result) => {
-  //     console.log(result[0]);
-  //     this.activeUsers[user_id] = new User(socket_id, user_id, result[0]);
-  //   });
-  // }
-
  async addUser(socket_id, user_id) {
     (this as any).activeUsers[user_id] = socket_id;
     let result = await this.find('users','user_id', user_id);
