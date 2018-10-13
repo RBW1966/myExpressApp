@@ -1,16 +1,19 @@
-const sio = require('socket.io');
-const iMongo = require('./mongo.js');
-
+//const sio = require('socket.io');
+//const iMongo = require('./mongo.js');
+//const disMongo = new iMongo();
+//import * as socketio from "socket.io";
+import iMongo from "./mongo";
 const disMongo = new iMongo();
 
 let ioinstance = null;
 
 class myIO {
-
+  server: string;
+  io: any;
   constructor (server) {
     if(!ioinstance){
-      (this as any).server = server;
-      (this as any).io = new sio(server);
+      this.server = server;
+      this.io = require("socket.io")(server);
       this.setupHandlers();
       ioinstance = this;
     }
@@ -19,7 +22,7 @@ class myIO {
 
   broadcastChatMessage(msg) {
     const myMessage = {"sender": "System", "msg": msg};
-    (this as any).io.emit('chat', JSON.stringify(myMessage));
+    this.io.emit('chat', JSON.stringify(myMessage));
   }
   setupHandlers(): void {
     // io.set('heartbeat timeout', 4000);
@@ -29,7 +32,7 @@ class myIO {
       this.broadcastChatMessage(d.toLocaleString());
     }, 10000);
 
-    (this as any).io.on('connection', socket => {
+    this.io.on('connection', socket => {
 
       console.log(`User ${socket.id} connected`);
       socket.on('disconnect', () => {
@@ -52,15 +55,15 @@ class myIO {
         console.log(`${cmd} - ${rest}`);
         switch (cmd) {
           case 'term':
-            (this as any).io.emit('terminate');
+            this.io.emit('terminate');
             process.exit();
             break;
           case 'end':
             if (rest.length > 0) {
               const theSocketID = disMongo.activeUsers[rest].socket_id;
-              (this as any).io.to(theSocketID).emit('logout');
+              this.io.to(theSocketID).emit('logout');
             } else {
-              (this as any).io.emit('logout');
+              this.io.emit('logout');
             }
             break;
           case 'recon':
@@ -71,7 +74,7 @@ class myIO {
             console.log(`ID=${socket.id} USER=${socket.user_id} MSG=${msg}`);
             const user_name =  await disMongo.Id2UserName(socket.user_id);
             const myUser = {"sender": user_name, "msg": msg};
-            (this as any).io.emit('chat', JSON.stringify(myUser));
+            this.io.emit('chat', JSON.stringify(myUser));
         }
       });
       socket.on('register user', function(user_id) {
@@ -87,4 +90,4 @@ class myIO {
   }
 }
 
-module.exports = myIO
+export = myIO;

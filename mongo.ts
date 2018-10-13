@@ -1,33 +1,42 @@
-const MongoClient = require('mongodb').MongoClient;
+//const MongoClient = require('mongodb').MongoClient;
+import { MongoClient as MongoClient } from "mongodb";
 
 let instance = null;
 
 class User {
+  socket_id: string;
+  user_id: string;
+  name_first: string;
+  name_last: string;
+  birthdate: Date;
+
   constructor(socket_id, user_id, user) {
-    (this as any).socket_id = socket_id;
-    (this as any).user_id = user_id;
-    (this as any).Name_First = user.Name_First;
-    (this as any).Name_Last = user.Name_Last;
-    (this as any).Birthdate = user.Birthdate;
+    this.socket_id = socket_id;
+    this.user_id = user_id;
+    this.name_first = user.Name_First;
+    this.name_last = user.Name_Last;
+    this.birthdate = user.Birthdate;
   }
 }
 class myMongo {
+  activeUsers: object;
+  db: any;
   constructor() {
     if(!instance){
-      (this as any).activeUsers = {};
+      this.activeUsers = {};
       instance = this;
     }
     return instance;
   }
   removeUser(user_id) {
-    delete (this as any).activeUsers[user_id];
+    delete this.activeUsers[user_id];
   }
  async addUser(socket_id, user_id) {
-    (this as any).activeUsers[user_id] = socket_id;
+    this.activeUsers[user_id] = socket_id;
     let result = await this.find('users','user_id', user_id);
     //const user = JSON.parse(result);
     console.log(result);
-    (this as any).activeUsers[user_id] = new User(socket_id, user_id, result);
+    this.activeUsers[user_id] = new User(socket_id, user_id, result);
   }
 
   connect(mongo_uri) {
@@ -40,32 +49,20 @@ class myMongo {
       } else {
         console.log("MongoClient Connected!");
         // Save reference to db
-        (this as any).db = db;
+        this.db = db;
       }
     });
   }
   
   close() {
-    (this as any).db.close();
+    this.db.close();
   }
-  
-  // find(collection, fieldName, value, callback) {
-  //   this.db.db('myexpressapp').collection(collection).find({[fieldName]: value}).toArray()
-  //     .then(result => {
-  //       callback(result);
-  //     })
-  //     .catch( err =>  {
-  //       console.log(`ERROR: ${err}`);
-  //     });
-  // }
-
   async find(collection, fieldName, value) {
-    let result = await (this as any).db.db('myexpressapp').collection(collection).findOne({[fieldName]: value});
+    let result = await this.db.db('myexpressapp').collection(collection).findOne({[fieldName]: value});
     return result;
   }
-
   async Id2UserName(id) {
-    let x = await (this as any).db.db('myexpressapp').collection('users').findOne({user_id: id});
+    let x = await this.db.db('myexpressapp').collection('users').findOne({user_id: id});
     try {
       const y = `${x.Name_First} ${x.Name_Last}`;
       return y;
@@ -77,4 +74,5 @@ class myMongo {
   }
 }
 
-module.exports = myMongo
+//module.exports = myMongo
+export = myMongo;

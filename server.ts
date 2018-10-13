@@ -1,16 +1,26 @@
-const express = require('express');
-const path = require('path');
-const favicon = require('serve-favicon');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const session = require('express-session');
-const passport = require('passport');
-const Auth0Strategy = require('passport-auth0');
-const flash = require('connect-flash');
-
+//const express = require('express');
+import express from "express";
+//const path = require('path');
+import path from "path";
+//const favicon = require('serve-favicon');
+import favicon from "serve-favicon";
+//const logger = require('morgan');
+import logger from "morgan";
+//const cookieParser = require('cookie-parser');
+import cookieParser from "cookie-parser";
+//const bodyParser = require('body-parser');
+import bodyParser from "body-parser";
+//const session = require('express-session');
+import session from "express-session";
+//const passport = require('passport');
+import passport from "passport";
+//const Auth0Strategy = require('passport-auth0');
+import Auth0Strategy from "passport-auth0";
+//const flash = require('connect-flash');
+import flash from "connect-flash";
 // Read environment variables
-const dotenv  = require('dotenv');
+//const dotenv  = require('dotenv');
+import dotenv from "dotenv";
 dotenv.load()
 
 // shared mongodb instance
@@ -100,18 +110,15 @@ app.use(function(req, res, next) {
 
 app.use('/', routes);
 //app.use('/user', user);
-
 interface  Error {
   status: number;
 }
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   let err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
-
 // error handlers
 
 // development error handler
@@ -136,13 +143,10 @@ app.use(function(err, req, res, next) {
   });
 });
 
-//module.exports = app;
-
 var debug = require('debug')('myexpressapp:server');
 /**
  * Get port from environment and store in Express.
  */
-//var port = normalizePort(process.env.PORT || '80');
 const port = normalizePort(process.env.PORT);
 app.set('port', port);
 /**
