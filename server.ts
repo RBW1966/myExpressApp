@@ -147,11 +147,28 @@ var debug = require('debug')('myexpressapp:server');
  */
 const port = normalizePort(process.env.PORT);
 app.set('port', port);
+
 /**
- * Create HTTP server.
+ * Create HTTPS server
+ * https://stackoverflow.com/questions/31156884/how-to-use-https-on-node-js-using-express-socket-io
  */
-const http = require('http');
-const server = http.createServer(app);
+//const fs = require('fs');
+import fs from "fs";
+//const https = require('https');
+import https from "https";
+
+const server = https.createServer({
+  key: fs.readFileSync('../conf/robweed-io.key.pem'),
+  cert: fs.readFileSync('../conf/robweed-io.cert.pem')
+},app);
+
+/**
+ * Listen on the process.env.PORT number
+ */
+server.listen(port);
+
+// -----------------------------------------
+
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
