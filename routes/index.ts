@@ -49,7 +49,7 @@ router.get('/callback',
     }
     // Set cookie
     res.cookie('USER_ID', req.session.passport.user.id, options) // options is optional
-    res.redirect(req.session.returnTo || '/');
+    res.redirect(req.session.returnTo || '/chat');
   }
 );
 
