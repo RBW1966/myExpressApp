@@ -6,6 +6,11 @@ const myeMongo = new eMongo();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  res.redirect('/index.html');
+});
+
+/* GET chat page. */
+router.get('/chat', function(req, res, next) {
   if (typeof req.user == "undefined") {
     res.render('index');
   } else {
