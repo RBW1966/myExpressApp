@@ -14,13 +14,22 @@ router.get('/chat', function(req, res, next) {
   if (typeof req.user == "undefined") {
     res.render('index');
   } else {
-    doIt(req, res);
+    doIt(req, res, 'index');
   }
 });
 
-async function doIt(req, res) {
+/* GET storage page. */
+router.get('/storage', function(req, res, next) {
+  if (typeof req.user == "undefined") {
+    res.render('index');
+  } else {
+    doIt(req, res, 'storage');
+  }
+});
+
+async function doIt(req, res, dest) {
   const user_name =  await myeMongo.Id2UserName(req.user.user_id);
-  res.render('index', {user: user_name});
+  res.render(dest, {user: user_name});
 }
 router.get('/login', epassport.authenticate('auth0', {
   scope: 'openid email profile'}),
