@@ -1,17 +1,12 @@
-extends layout
-
-block content
-  .w3-container
-    if loggedIn
-      .main
-        h4 You are logged in #{user}!
-        h1 Under Construction!!!
-        <iframe src="https://aws.robweed.io/chat" width=90% height=600 scrolling="yes"></iframe>
-        //<ul id="messages"></ul>
-        //<form id="form1" action="">
-        //<input id="m" autocomplete="off" placeholder="Enter text" /><button>Send</button>
-        //</form>
-      <script src="/socket.io/socket.io.js"></script>
-      <script src="/javascripts/storage.app.js"></script>
-    else
-      h4 You are not logged in! Please #[a(href="/login") Log In] to continue.
+//extends layout
+doctype html
+html
+  head
+    title= 'iFrame Test'
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='https://www.w3schools.com/w3css/4/w3.css')
+    script(src="https://cdn.auth0.com/js/auth0/8.7/auth0.min.js")
+  body
+    <div class="iframe-container">
+      <iframe src="https://aws.robweed.io/chat" allowfullscreen></iframe>
+    </div>
