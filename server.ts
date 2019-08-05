@@ -63,7 +63,7 @@ passport.deserializeUser(function(user, done) {
 // ----------------------------------------------------------------------------
 
 const app = express();
-//just a comment
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
