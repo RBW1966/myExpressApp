@@ -13,10 +13,10 @@ var timeout = (function () {
 })();
 
 window.addEventListener('load', () => {
-  adoIt();
+  secured_doIt();
 });
 // Disable key press
-function disableKeyPressing(e) {
+function secured_disableKeyPressing(e) {
       // keycode for F5 function
       if (e.keyCode === 116) {
         e.returnValue = false;
@@ -39,56 +39,46 @@ function disableKeyPressing(e) {
         return false;
       }
 }
-function doDisconnect() {
+function secured_doDisconnect() {
   if (terminated) return;
   console.log('doDisconnect');
   alert('Lost connection to myExpressApp.');
   socket.open();
 }
-function doLogout() {
+function secured_doLogout() {
   terminated = true;
   console.log('doLogout');
   location.href = "/logout";
 }
-function doRecon() {
+function secured_doRecon() {
   console.log('doRecon');
   socket.close();
 }
-function doTerminate() {
+function secured_doTerminate() {
   terminated = true;
   console.log('doTerminate');
   alert('myExpressApp is offline.');
   location.href ="https://github.com/RBW1966/myExpressApp";
 }
 
-function doConnect() {
+function secured_doConnect() {
   socket.emit('register user', user_id);
 }
-function adoIt() {
-  user_id = getCookie("USER_ID");
-  console.log(`myID=${user_id}`);
+function secured_doIt() {
+  user_id = secured_getCookie("USER_ID");
+  console.log(`secured_myID=${user_id}`);
   socket = io();
-  socket.on('terminate', doTerminate);
-  socket.on('logout', doLogout);
-  socket.on('recon', doRecon);
-  socket.on('disconnect', doDisconnect);
-  socket.on('chat', doIncomingChatMessage)
-  socket.on('connect', doConnect);
+  socket.on('terminate', secured_doTerminate);
+  socket.on('logout', secured_doLogout);
+  socket.on('recon', secured_doRecon);
+  socket.on('disconnect', secured_doDisconnect);
+  socket.on('connect', secured_doConnect);
   socket.emit('register user', user_id);
-  document.getElementById("form1").addEventListener('submit', function(evt) {
-    const m = <HTMLInputElement>document.getElementById("m");
-    evt.preventDefault();
-    if (m.value.length) {
-      m.placeholder = '';
-      let x = timeout();
-      socket.emit('chat message', m.value);
-      m.value = '';
-    }
-  });
+  // Manipulate DOM
   document.addEventListener('keydown', (e) => {
     // F5 is pressed
     if((e.which || e.keyCode) == 116) {
-      disableKeyPressing(e);
+      secured_disableKeyPressing(e);
       console.log('F5 was ignored.');
     }
     // Backspace
@@ -98,19 +88,19 @@ function adoIt() {
         case "m":
           break;
         default:
-          disableKeyPressing(e);
+          secured_disableKeyPressing(e);
           console.log('Backspace was ignored.');
       }
     }
     // Ctrl+R
     if (e.ctrlKey && (e.which === 82) ) {
-        disableKeyPressing(e);
-       console.log('Ctrl+R was ignored.');
+      secured_disableKeyPressing(e);
+      console.log('Ctrl+R was ignored.');
     }
   });
 }
 
-function getCookie(cname) {
+function secured_getCookie(cname) {
   var name = cname + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
   var ca = decodedCookie.split(';');
