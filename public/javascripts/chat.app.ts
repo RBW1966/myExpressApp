@@ -1,9 +1,9 @@
-let socket = null;
-let user_id = null;
-let terminated = false;
-let timer;
+var socket = null;
+var user_id = null;
+var terminated = false;
+var timer;
 
-let timeout = (function () {
+var timeout = (function () {
   return function() {
     window.clearTimeout(timer);
     timer = window.setTimeout( () => {

@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  .w3-container
+    if loggedIn
+      .main
+        h4 You are logged in #{user}!
+
+      <script src="/socket.io/socket.io.js"></script>
+      <script src="/javascripts/secured.app.js"></script>
+    else
+      h4 You are not logged in! Please #[a(href="/login") Log In] to continue.

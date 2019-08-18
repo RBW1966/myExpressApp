@@ -12,18 +12,36 @@ router.get('/', function(req, res, next) {
 /* GET chat page. */
 router.get('/chat', function(req, res, next) {
   if (typeof req.user == "undefined") {
-    res.render('index');
+    res.render('failure');
   } else {
-    doIt(req, res, 'index');
+    doIt(req, res, 'chat');
   }
 });
 
 /* GET storage page. */
 router.get('/storage', function(req, res, next) {
   if (typeof req.user == "undefined") {
-    res.render('index');
+    res.render('failure');
   } else {
     doIt(req, res, 'storage');
+  }
+});
+
+/* GET secured page. */
+router.get('/secured', function(req, res, next) {
+  if (typeof req.user == "undefined") {
+    res.render('failure');
+  } else {
+    doIt(req, res, 'secured');
+  }
+});
+
+/* GET records page. */
+router.get('/records', function(req, res, next) {
+  if (typeof req.user == "undefined") {
+    res.render('failure');
+  } else {
+    doIt(req, res, 'records');
   }
 });
 
@@ -58,7 +76,7 @@ router.get('/callback',
     }
     // Set cookie
     res.cookie('USER_ID', req.session.passport.user.id, options) // options is optional
-    res.redirect(req.session.returnTo || '/chat');
+    res.redirect(req.session.returnTo || '/secured');
   }
 );
 
