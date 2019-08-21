@@ -161,13 +161,6 @@ var privateKey  = fs.readFileSync('../conf/private.key', 'utf8');
 var certificate = fs.readFileSync('../conf/certificate.crt', 'utf8');
 var credentials = {key: privateKey, cert: certificate};
 const server = https.createServer(credentials, app);
-/**  const server = https.createServer({
-  //key: fs.readFileSync('../conf/robweed-io.key.pem'),
-  //cert: fs.readFileSync('../conf/robweed-io.cert.pem')
-  key: fs.readFileSync('../conf/sslforfree/certificate.crt'),
-  cert: fs.readFileSync('../conf/sslforfree/private.key')
-},app);
-**/
 
 /**
  * Listen on the process.env.PORT number

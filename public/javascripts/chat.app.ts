@@ -14,10 +14,10 @@ var timeout = (function () {
 })();
 
 window.addEventListener('load', () => {
-  adoIt();
+  chat_adoIt();
 });
 // Disable key press
-function disableKeyPressing(e) {
+function chat_disableKeyPressing(e) {
       // keycode for F5 function
       if (e.keyCode === 116) {
         e.returnValue = false;
@@ -40,28 +40,28 @@ function disableKeyPressing(e) {
         return false;
       }
 }
-function doDisconnect() {
+function chat_doDisconnect() {
   if (terminated) return;
   console.log('doDisconnect');
   alert('Lost connection to myExpressApp.');
   socket.open();
 }
-function doLogout() {
+function chat_doLogout() {
   terminated = true;
   console.log('doLogout');
   location.href = "/logout";
 }
-function doRecon() {
+function chat_doRecon() {
   console.log('doRecon');
   socket.close();
 }
-function doTerminate() {
+function chat_doTerminate() {
   terminated = true;
   console.log('doTerminate');
   alert('myExpressApp is offline.');
   location.href ="https://github.com/RBW1966/myExpressApp";
 }
-function doIncomingChatMessage(message) {
+function chat_doIncomingChatMessage(message) {
   // Parse the JSON message argument
   var msg = JSON.parse(message);
   // We will display SENDER: MESSAGE
@@ -78,19 +78,19 @@ function doIncomingChatMessage(message) {
   // Scroll to make the new bottom row visible
   messages.scrollTop = messages.scrollHeight - messages.clientHeight;
 }
-function doConnect() {
+function chat_doConnect() {
   socket.emit('register user', user_id);
 }
-function adoIt() {
-  user_id = getCookie("USER_ID");
+function chat_adoIt() {
+  user_id = chat_getCookie("USER_ID");
   console.log(`myID=${user_id}`);
   socket = io();
-  socket.on('terminate', doTerminate);
-  socket.on('logout', doLogout);
-  socket.on('recon', doRecon);
-  socket.on('disconnect', doDisconnect);
-  socket.on('chat', doIncomingChatMessage)
-  socket.on('connect', doConnect);
+  socket.on('terminate', chat_doTerminate);
+  socket.on('logout', chat_doLogout);
+  socket.on('recon', chat_doRecon);
+  socket.on('disconnect', chat_doDisconnect);
+  socket.on('chat', chat_doIncomingChatMessage)
+  socket.on('connect', chat_doConnect);
   socket.emit('register user', user_id);
   document.getElementById("form1").addEventListener('submit', function(evt) {
     const m = <HTMLInputElement>document.getElementById("m");
@@ -105,7 +105,7 @@ function adoIt() {
   document.addEventListener('keydown', (e) => {
     // F5 is pressed
     if((e.which || e.keyCode) == 116) {
-      disableKeyPressing(e);
+      chat_disableKeyPressing(e);
       console.log('F5 was ignored.');
     }
     // Backspace
@@ -115,19 +115,19 @@ function adoIt() {
         case "m":
           break;
         default:
-          disableKeyPressing(e);
+          chat_disableKeyPressing(e);
           console.log('Backspace was ignored.');
       }
     }
     // Ctrl+R
     if (e.ctrlKey && (e.which === 82) ) {
-        disableKeyPressing(e);
-       console.log('Ctrl+R was ignored.');
+      chat_disableKeyPressing(e);
+      console.log('Ctrl+R was ignored.');
     }
   });
 }
 
-function getCookie(cname) {
+function chat_getCookie(cname) {
   var name = cname + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
   var ca = decodedCookie.split(';');
