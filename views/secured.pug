@@ -3,8 +3,31 @@ extends layout
 block content
   .w3-container
     if loggedIn
-      .main
-        h4 You are logged in #{user}!
+      <div class="w3-sidebar w3-bar-block w3-light-grey w3-card" style="width:130px">
+        <h5 class="w3-bar-item">Menu</h5>
+        <button class="w3-bar-item w3-button tablink" onclick="secured_displayApp(event, 'records')">Records</button>
+        <button class="w3-bar-item w3-button tablink" onclick="secured_displayApp(event, 'chat')">Chat</button>
+        <button class="w3-bar-item w3-button tablink" onclick="secured_displayApp(event, 'storage')">Storage</button>
+      </div>
+      
+      <div style="margin-left:130px">
+        <div class="w3-padding">
+              h4 You are logged in #{user}!
+        </div>
+
+        <div id="records" class="iframe-container app" style="display:none">
+          <iframe src="https://aws.robweed.io/records" allowfullscreen></iframe>
+        </div>
+
+        <div id="chat" class="iframe-container app" style="display:none">
+          <iframe src="https://aws.robweed.io/chat" allowfullscreen></iframe>
+        </div>
+
+        <div id="storage" class="iframe-container app" style="display:none">
+          <iframe src="https://aws.robweed.io/storage" allowfullscreen></iframe>
+        </div>
+      
+      </div>
 
       <script src="/socket.io/socket.io.js"></script>
       <script src="/javascripts/secured.app.js"></script>
