@@ -1,8 +1,6 @@
 node_modules/
 .env
 npm-debug.log
-io.js
-server.js
-mongo.js
+*.js
 routes/index.js
-public/javascripts/app.js
+public/javascripts/*.js
